@@ -1,20 +1,19 @@
-# Project Settings
-SRC_DIR := ./src
-
 # Compiler Settings
 CFLAGS := -std=c2x -Wall -Wextra -pedantic
 LFLAGS := -lm
 
-# Executables
-binary-search: ./bin/binary-search
+TARGETS := binary-search selection-sort
 
-# Binaries
-./bin/binary-search: ./build/binary-search.o | ./bin
+BIN := $(TARGETS:%=./bin/%)
+OBJ := $(TARGETS:%=./build/%.o)
+
+all: $(BIN)
+
+./bin/%: ./build/%.o | ./bin
 	cc $(CFLAGS) -o $@ $^ $(LFLAGS)
 
-# Object Files
-./build/binary-search.o: ./src/binary-search.c | ./build
-	cc $(CFLAGS) -c $^ -o $@
+./build/%.o: ./src/%.c | ./build
+	cc $(CFLAGS) -c $< -o $@
 
 # Directories
 ./build:

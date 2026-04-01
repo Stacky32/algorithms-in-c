@@ -1,9 +1,7 @@
-#include <stdio.h>
+#include "../test_framework.h"
+#include "searching/searching.h"
 
-int binarySearch(int arr[], int len, int x);
-void checkResult(int x, int expected, int actual);
-
-int main(void) {
+void test_binary_search(void) {
     int a[64] = {
         2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
         59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131,
@@ -39,38 +37,7 @@ int main(void) {
     int numCases = sizeof(cases) / sizeof(struct testcase);
 
     for (int i = 0; i < numCases; i++) {
-        int actual = binarySearch(a, cases[i].len, cases[i].x);
-        checkResult(cases[i].x, cases[i].expected, actual);
+        int actual = binary_search(a, cases[i].len, cases[i].x);
+        ASSERT_TRUE(actual == cases[i].expected);
     }
-}
-
-void checkResult(int x, int expected, int actual) {
-    if (actual == expected) {
-        printf("PASS - find(%d) = %d\n", x, expected);
-    } else {
-        printf("FAIL - expected find(%d) = %d, but got %d\n", x, expected, actual);
-    }
-}
-
-int binarySearch(int arr[], int len, int tg) {
-    int min = 0;
-    int max = len - 1;
-    int guess = 0;
-    
-    while (max >= min) {
-        guess = (min + max)/2;
-    
-        int v = arr[guess];
-        if (v == tg) {
-            return guess;
-        }
-        
-        if (v < tg) {
-            min = guess + 1;
-        } else {
-            max = guess - 1;
-        }
-    }
-
-    return -1;
 }

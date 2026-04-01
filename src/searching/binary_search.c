@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "searching/searching.h"
 
 int binary_search(int arr[], int len, int tg) {

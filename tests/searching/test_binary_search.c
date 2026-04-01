@@ -41,3 +41,7 @@ void test_binary_search(void) {
         ASSERT_TRUE(actual == cases[i].expected);
     }
 }
+
+void run_binary_search_tests(void) {
+    RUN_TEST(test_binary_search);
+}

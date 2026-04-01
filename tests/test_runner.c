@@ -1,14 +1,19 @@
 #include "test_framework.h"
 
-void test_selection_sort(void);
-void test_binary_search(void);
+// Sorting
+void run_selection_sort_tests(void);
+void run_insertion_sort_tests(void);
+
+// Searching
+void run_binary_search_tests(void);
 
 int tests_run = 0;
 int tests_failed = 0;
 
 int main(void) {
-    RUN_TEST(test_selection_sort);
-    RUN_TEST(test_binary_search);
+    run_selection_sort_tests();
+    run_insertion_sort_tests();
+    run_binary_search_tests();
 
     TEST_SUMMARY();
     return 0;

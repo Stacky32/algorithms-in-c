@@ -4,10 +4,10 @@ An educational library on standard algorithms implemented in C. This is in ongoi
 
 ## Sorting Algorithms
 
-- Selection sort
-- Insertion sort
-- Merge sort
+- [Selection sort](./src/sorting/selection_sort.c)
+- [Insertion sort](./src/sorting/insertion_sort.c)
+- [Merge sort](./src/sorting/merge_sort.c)
 
 ## Searching Algorithms
 
-- Binary search
+- [Binary search](./src/searching/binary_search.c)

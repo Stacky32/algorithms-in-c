@@ -3,7 +3,7 @@ TEST_DIR = tests
 BUILD_DIR = build
 BIN_DIR = bin
 
-CFLAGS = -Wall -Wextra -std=c2x -Iinclude -MMD -MP
+CFLAGS = -Wall -Wextra -Wvla -std=c2x -Iinclude -MMD -MP
 
 SRC_FILES = $(shell find $(SRC_DIR) -name '*.c')
 TEST_FILES = $(shell find $(TEST_DIR) -name '*.c')

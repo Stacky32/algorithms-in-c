@@ -6,6 +6,7 @@ An educational library on standard algorithms implemented in C. This is in ongoi
 
 - Selection sort
 - Insertion sort
+- Merge sort
 
 ## Searching Algorithms
 

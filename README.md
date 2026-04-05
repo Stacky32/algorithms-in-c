@@ -7,6 +7,7 @@ An educational library on standard algorithms implemented in C. This is in ongoi
 - [Selection sort](./src/sorting/selection_sort.c)
 - [Insertion sort](./src/sorting/insertion_sort.c)
 - [Merge sort](./src/sorting/merge_sort.c)
+- [Quicksort](./src/sorting/quick_sort.c)
 
 ## Searching Algorithms
 

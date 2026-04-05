@@ -9,3 +9,11 @@ bool is_sorted_asc(int a[], int len) {
 
     return 1;
 }
+
+void swap(int a[], int i, int j) {
+    if (i == j) return;
+
+    a[i] = a[i] ^ a[j];
+    a[j] = a[i] ^ a[j];
+    a[i] = a[i] ^ a[j];
+}

@@ -1,13 +1,5 @@
 #include "sorting/sorting.h"
-
-// Swaps the elements and indices i and j in an array of integers.
-// No bounds checking is performed on i and j, so it is crucial
-// to check these indices are within range.
-void swap(int a[], int i, int j) {
-    a[i] = a[i] ^ a[j];
-    a[j] = a[i] ^ a[j];
-    a[i] = a[i] ^ a[j];
-}
+#include "utils/array_utils.h"
 
 // Finds the index of the first occurence of the minimum value
 // in an array of integers, starting from the start index.

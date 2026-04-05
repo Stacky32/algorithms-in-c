@@ -17,4 +17,8 @@ void merge(int a[], int left, int mid, int right);
 // in ascending order.
 void merge_sort(int a[], int len);
 
+// Performs the quick sort algorithm to sort an array of integers
+// in ascending order, using the last element of a subarray as the pivot.
+void quick_sort(int a[], int len);
+
 #endif

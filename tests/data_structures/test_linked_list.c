@@ -73,6 +73,62 @@ void test_linked_list_append(void) {
     ASSERT_TRUE(int_cmp_node(list.head->next, a[1]));
 }
 
+void test_linked_list_insert_empty(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, NULL, NULL);
+
+    int x = 7;
+    linked_list_insert(&list, &x, 0, sizeof(int));
+    
+    ASSERT_TRUE(list.count == 1);
+    ASSERT_TRUE(int_cmp_node(list.head, x));
+    ASSERT_TRUE(int_cmp_node(list.tail, x));
+}
+
+void test_linked_list_insert_at_head(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, NULL, NULL);
+
+    linked_list_append(&list, &(int){1}, sizeof(int));
+    linked_list_append(&list, &(int){2}, sizeof(int));
+
+    int x = 7;
+    linked_list_insert(&list, &x, 0, sizeof(int));
+    
+    ASSERT_TRUE(list.count == 3);
+    ASSERT_TRUE(int_cmp_node(list.head, x));
+}
+
+void test_linked_list_insert_at_tail(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, NULL, NULL);
+
+    linked_list_append(&list, &(int){1}, sizeof(int));
+    linked_list_append(&list, &(int){2}, sizeof(int));
+
+    int x = 7;
+    linked_list_insert(&list, &x, 2, sizeof(int));
+    
+    ASSERT_TRUE(list.count == 3);
+    ASSERT_TRUE(int_cmp_node(list.tail, x));
+}
+
+void test_linked_list_insert(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, NULL, NULL);
+
+    int og_len = 5;
+    for (int i = 0; i < og_len; i++) {
+        linked_list_append(&list, &i, sizeof(int));
+    }
+
+    int x = 11;
+    linked_list_insert(&list, &x, 2, sizeof(int));
+
+    ASSERT_TRUE(list.count == og_len + 1);
+    ASSERT_TRUE(int_cmp_node(list.head->next->next, x));
+}
+
 void run_linked_list_tests(void) {
     RUN_TEST(test_linked_list_init_list);
     RUN_TEST(test_linked_list_prepend);
@@ -80,4 +136,8 @@ void run_linked_list_tests(void) {
     RUN_TEST(test_linked_list_free_list_empty);
     RUN_TEST(test_linked_list_free_list);
     RUN_TEST(test_linked_list_append);
+    RUN_TEST(test_linked_list_insert_empty);
+    RUN_TEST(test_linked_list_insert_at_head);
+    RUN_TEST(test_linked_list_insert_at_tail);
+    RUN_TEST(test_linked_list_insert);
 }

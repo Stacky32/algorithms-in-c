@@ -72,6 +72,7 @@ static void linked_list_clear_list(struct linked_list_list *list) {
     }
 
     list->head = NULL;
+    list->tail = NULL;
     list->count = 0;
 }
 
@@ -123,5 +124,32 @@ void linked_list_append(
         list->tail = node;
     }
 
+    list->count++;
+}
+
+void linked_list_insert(
+    struct linked_list_list *list,
+    void *value,
+    int index,
+    size_t elem_size) {
+    
+    assert(list != NULL);
+    if (list->head == NULL || index == 0) {
+        return linked_list_prepend(list, value, elem_size);
+    } else if (index >= list->count) {
+        return linked_list_append(list, value, elem_size);
+    }
+
+    struct linked_list_node *tmp = list->head;
+    while (index > 1) {
+        tmp = tmp->next;
+        index--;
+    }
+
+    struct linked_list_node *node = linked_list_create_node(value, elem_size);
+    
+    // Insert after tmp
+    node->next = tmp->next;
+    tmp->next = node;
     list->count++;
 }

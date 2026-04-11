@@ -1,6 +1,10 @@
 # Algorithms in C
 
-An educational library on standard algorithms implemented in C. This is in ongoing development, so examples are continually being added.
+An educational library on data structures and algorithms, implemented in C. This is in ongoing development, so examples are continually being added.
+
+## Data Structures
+
+- [Single linked list](./src/data_structures/linked_list.c)
 
 ## Sorting Algorithms
 

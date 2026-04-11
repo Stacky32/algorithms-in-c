@@ -1,5 +1,8 @@
 #include "test_framework.h"
 
+// Data structures
+void run_linked_list_tests(void);
+
 // Utils
 void run_array_utils_tests(void);
 
@@ -16,6 +19,8 @@ int tests_run = 0;
 int tests_failed = 0;
 
 int main(void) {
+    run_linked_list_tests();
+    
     run_array_utils_tests();
 
     run_selection_sort_tests();

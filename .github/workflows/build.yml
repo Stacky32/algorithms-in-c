@@ -1,0 +1,19 @@
+name: Build and test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: make
+      run: make
+    - name: make run_tests
+      run: make run_tests
+    - name: run tests
+      run: ./run_tests

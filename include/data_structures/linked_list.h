@@ -21,6 +21,10 @@ void linked_list_init_list(
     bool (*cmp)(const void*, const void*),
     void (*print)(const void*));
 
+bool linked_list_delete_head(struct linked_list_list *list);
+
+bool linked_list_delete_tail(struct linked_list_list *list);
+
 void linked_list_free_list(struct linked_list_list *list);
 
 void linked_list_prepend(

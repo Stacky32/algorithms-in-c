@@ -50,7 +50,7 @@ void linked_list_init_list(
     list->print = print;
 }
 
-static bool linked_list_delete_head(struct linked_list_list *list) {
+bool linked_list_delete_head(struct linked_list_list *list) {
     assert(list != NULL);
     
     if (list->count == 0) {
@@ -61,6 +61,33 @@ static bool linked_list_delete_head(struct linked_list_list *list) {
     linked_list_free_node(list->head);
     list->head = new_head;
     list->count--;
+    return true;
+}
+
+bool linked_list_delete_tail(struct linked_list_list *list) {
+    assert(list != NULL);
+
+    if (list->count == 0) {
+        return false;
+    }
+
+    if (list->head->next == NULL) {
+        linked_list_delete_head(list);
+        list->tail = NULL;
+        return true;
+    }
+
+    struct linked_list_node *tmp = list->head;
+
+    while (tmp->next->next != NULL) {
+        tmp = tmp->next;
+    }
+
+    linked_list_free_node(tmp->next);
+    tmp->next = NULL;
+    list->tail = tmp;
+    list->count--;
+
     return true;
 }
 

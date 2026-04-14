@@ -1,40 +1,44 @@
-SRC_DIR = src
-TEST_DIR = tests
-BUILD_DIR = build
-BIN_DIR = bin
+# Directories
+SRC_DIR := src
+TEST_DIR := tests
+BUILD_DIR := build
 
-CFLAGS = -Wall -Wextra -Wvla -std=c2x -Iinclude -MMD -MP
+# Compiler
+CFLAGS := -Wall -Wextra -Wvla -std=c2x -Iinclude -MMD -MP
 
-SRC_FILES = $(shell find $(SRC_DIR) -name '*.c')
-TEST_FILES = $(shell find $(TEST_DIR) -name '*.c')
+# File discovery
+SRC_FILES := $(shell find $(SRC_DIR) -name '*.c' | sort)
+TEST_FILES := $(shell find $(TEST_DIR) -name '*.c' | sort)
 
-SRC_OBJS = $(SRC_FILES:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
-TEST_OBJS = $(TEST_FILES:$(TEST_DIR)/%.c=$(BUILD_DIR)/tests/%.o)
+# Object files
+SRC_OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC_FILES))
+TEST_OBJS := $(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/tests/%.o,$(TEST_FILES))
 
-TARGET = algolib
-TEST_TARGET = run_tests
+OBJS := $(SRC_OBJS) $(TEST_OBJS)
 
-# Build library (object files only)
-.PHONY: $(TARGET)
-$(TARGET): $(SRC_OBJS)
-	@echo "Library compiled."
+# Targets
+TEST_TARGET := run_tests
 
-# Build test runner
-$(TEST_TARGET): $(SRC_OBJS) $(TEST_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
-
-# Compile source files
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Compile test files
-$(BUILD_DIR)/tests/%.o: $(TEST_DIR)/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Include dependencies
--include $(SRC_OBJS:.o=.d) $(TEST_OBJS:.o=.d)
+.PHONY: all clean
+all: $(TEST_TARGET)
 
 clean:
 	rm -rf $(BUILD_DIR) $(TEST_TARGET)
+
+# Link test binary
+$(TEST_TARGET): $(SRC_OBJS) $(TEST_OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# --- Compilation rules ---
+# Source files
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Test files
+$(BUILD_DIR)/tests/%.o: $(TEST_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Dependencies
+-include $(OBJS:.o=.d)

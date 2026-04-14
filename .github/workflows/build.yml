@@ -14,9 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
-    - name: make
+    - name: Compile library and test
       run: make
-    - name: make run_tests
-      run: make run_tests
-    - name: run tests
-      run: ./run_tests
+    - name: Test
+      run: make test

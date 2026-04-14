@@ -1,44 +1,34 @@
-# Directories
-SRC_DIR := src
-TEST_DIR := tests
-BUILD_DIR := build
+CC=gcc
+AR=ar
+CFLAGS=-Wall -Wextra -Wvla -std=c2x -Iinclude -MMD -MP
 
-# Compiler
-CFLAGS := -Wall -Wextra -Wvla -std=c2x -Iinclude -MMD -MP
+SRC:=$(shell find src -name '*.c' | sort)
+TEST:=$(shell find tests -name '*.c' | sort)
 
-# File discovery
-SRC_FILES := $(shell find $(SRC_DIR) -name '*.c' | sort)
-TEST_FILES := $(shell find $(TEST_DIR) -name '*.c' | sort)
+OBJ=$(SRC:src/%.c=build/%.o)
+TOBJ=$(TEST:tests/%.c=build/tests/%.o)
 
-# Object files
-SRC_OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC_FILES))
-TEST_OBJS := $(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/tests/%.o,$(TEST_FILES))
-
-OBJS := $(SRC_OBJS) $(TEST_OBJS)
-
-# Targets
-TEST_TARGET := run_tests
-
-.PHONY: all clean
-all: $(TEST_TARGET)
+.PHONY: all clean test
+all: libalgos.a run_tests
 
 clean:
-	rm -rf $(BUILD_DIR) $(TEST_TARGET)
+	rm -rf build *.a run_tests
 
-# Link test binary
-$(TEST_TARGET): $(SRC_OBJS) $(TEST_OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+test: run_tests
+	./run_tests
 
-# --- Compilation rules ---
-# Source files
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+libalgos.a: $(OBJ)
+	ar rcs $@ $^
+
+run_tests: $(OBJ) $(TOBJ)
+	$(CC) $(CFLAGS) -o $@ $(TOBJ) -L. -lalgos
+
+build/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Test files
-$(BUILD_DIR)/tests/%.o: $(TEST_DIR)/%.c
+build/tests/%.o: tests/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Dependencies
--include $(OBJS:.o=.d)
+-include $(OBJ:.o=.d) $(TOBJ:.o=.d)

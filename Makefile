@@ -15,6 +15,7 @@ TARGET = algolib
 TEST_TARGET = run_tests
 
 # Build library (object files only)
+.PHONY: $(TARGET)
 $(TARGET): $(SRC_OBJS)
 	@echo "Library compiled."
 
@@ -33,7 +34,7 @@ $(BUILD_DIR)/tests/%.o: $(TEST_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Include dependencies
--include $(OBJS:.o=.d)
+-include $(SRC_OBJS:.o=.d) $(TEST_OBJS:.o=.d)
 
 clean:
 	rm -rf $(BUILD_DIR) $(TEST_TARGET)

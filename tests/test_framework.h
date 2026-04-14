@@ -31,6 +31,7 @@ extern int tests_failed;
             printf("🎉 ALL TESTS PASSED\n"); \
         } else { \
             printf("⚠️ SOME TESTS FAILED\n"); \
+            exit(1); \
         } \
     } while (0)
 

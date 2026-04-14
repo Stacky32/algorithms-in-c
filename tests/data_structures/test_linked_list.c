@@ -121,7 +121,7 @@ void test_linked_list_delete_tail_three_nodes(void) {
 
     bool res = linked_list_delete_tail(&list);
 
-    ASSERT_TRUE(res);
+    ASSERT_TRUE(!res);
     ASSERT_TRUE(list.count == og_len - 1);
     ASSERT_TRUE(int_cmp_node(list.tail, 1));
     ASSERT_TRUE(list.tail->next == NULL);

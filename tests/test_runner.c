@@ -22,14 +22,15 @@ int main(void) {
     run_linked_list_tests();
     
     run_array_utils_tests();
-
+    
     run_selection_sort_tests();
     run_insertion_sort_tests();
     run_merge_sort_tests();
     run_quick_sort_tests();
     
     run_binary_search_tests();
-
+    
     TEST_SUMMARY();
+
     return 0;
 }

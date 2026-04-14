@@ -2,7 +2,7 @@
 
 bool is_sorted_asc(int a[], int len) {
     for (int i = 1; i < len; i++) {
-        if (a[i-1] > a[i]) {
+        if (a[i - 1] > a[i]) {
             return 0;
         }
     }
@@ -11,7 +11,8 @@ bool is_sorted_asc(int a[], int len) {
 }
 
 void swap(int a[], int i, int j) {
-    if (i == j) return;
+    if (i == j)
+        return;
 
     a[i] = a[i] ^ a[j];
     a[j] = a[i] ^ a[j];

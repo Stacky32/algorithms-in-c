@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include "sorting/sorting.h"
+
+#include <stdlib.h>
 
 void merge(int a[], int left, int mid, int right) {
     // Create temporary sub arrays for indices [left..mid] and [mid+1..right]
@@ -50,9 +51,9 @@ void merge_sort_internal(int a[], int left, int right) {
         return;
     }
 
-    int mid = (left + right)/2;
+    int mid = (left + right) / 2;
     merge_sort_internal(a, left, mid);
-    merge_sort_internal(a, mid+1, right);
+    merge_sort_internal(a, mid + 1, right);
     merge(a, left, mid, right);
 }
 

@@ -15,6 +15,6 @@ void insert_in_order(int a[], int rightIdx, int x) {
 
 void insertion_sort(int a[], int len) {
     for (int i = 0; i < len - 1; i++) {
-        insert_in_order(a, i, a[i+1]);
+        insert_in_order(a, i, a[i + 1]);
     }
 }

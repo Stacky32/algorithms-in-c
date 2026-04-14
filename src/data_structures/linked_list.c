@@ -1,14 +1,15 @@
 /* linked_list.c
-* Implementation of a generic singly linked list
-*/
+ * Implementation of a generic singly linked list
+ */
+
+#include "data_structures/linked_list.h"
 
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include "data_structures/linked_list.h"
 
-static struct linked_list_node* linked_list_create_node(void *value, size_t elem_size) {
+static struct linked_list_node *linked_list_create_node(void *value, size_t elem_size) {
     // allocate node
     struct linked_list_node *node = malloc(sizeof(struct linked_list_node));
     assert(node != NULL);
@@ -37,11 +38,9 @@ static void linked_list_free_node(struct linked_list_node *node) {
     free(node);
 }
 
-void linked_list_init_list(
-    struct linked_list_list *list,
-    bool (*cmp)(const void*, const void*),
-    void (*print)(const void*)) {
-    
+void linked_list_init_list(struct linked_list_list *list, bool (*cmp)(const void *, const void *),
+                           void (*print)(const void *)) {
+
     assert(list != NULL);
     list->head = NULL;
     list->tail = NULL;
@@ -52,7 +51,7 @@ void linked_list_init_list(
 
 bool linked_list_delete_head(struct linked_list_list *list) {
     assert(list != NULL);
-    
+
     if (list->count == 0) {
         return false;
     }
@@ -116,14 +115,11 @@ void linked_list_free_list(struct linked_list_list *list) {
     list->print = NULL;
 }
 
-void linked_list_prepend(
-    struct linked_list_list *list,
-    void *value,
-    size_t elem_size) {
+void linked_list_prepend(struct linked_list_list *list, void *value, size_t elem_size) {
 
     assert(list != NULL);
     struct linked_list_node *node = linked_list_create_node(value, elem_size);
-    
+
     if (list->count == 0) {
         list->head = node;
         list->tail = node;
@@ -135,11 +131,8 @@ void linked_list_prepend(
     list->count++;
 }
 
-void linked_list_append(
-    struct linked_list_list *list,
-    void *value,
-    size_t elem_size) {
-    
+void linked_list_append(struct linked_list_list *list, void *value, size_t elem_size) {
+
     assert(list != NULL);
     struct linked_list_node *node = linked_list_create_node(value, elem_size);
 
@@ -154,12 +147,8 @@ void linked_list_append(
     list->count++;
 }
 
-void linked_list_insert(
-    struct linked_list_list *list,
-    void *value,
-    int index,
-    size_t elem_size) {
-    
+void linked_list_insert(struct linked_list_list *list, void *value, int index, size_t elem_size) {
+
     assert(list != NULL);
     if (list->head == NULL || index == 0) {
         return linked_list_prepend(list, value, elem_size);
@@ -174,7 +163,7 @@ void linked_list_insert(
     }
 
     struct linked_list_node *node = linked_list_create_node(value, elem_size);
-    
+
     // Insert after tmp
     node->next = tmp->next;
     tmp->next = node;

@@ -32,3 +32,16 @@ build/tests/%.o: tests/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 -include $(OBJ:.o=.d) $(TOBJ:.o=.d)
+
+# --- Formatting ---
+FORMAT_SRC := $(shell find src include tests -name "*.c" -o -name "*.h")
+
+.PHONY: format format-check
+
+format:
+	@echo "Formatting source files..."
+	@clang-format -i $(FORMAT_SRC)
+
+format-check:
+	@echo "Checking formatting..."
+	@clang-format --dry-run --Werror $(FORMAT_SRC)

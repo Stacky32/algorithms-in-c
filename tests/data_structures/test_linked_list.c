@@ -2,13 +2,13 @@
 #include "data_structures/linked_list.h"
 
 static bool int_cmp_node(struct linked_list_node *node, int value) {
-    return *(const int*)node->value == value;
+    return *(const int *)node->value == value;
 }
 
 void test_linked_list_init_list(void) {
     struct linked_list_list list = {};
     linked_list_init_list(&list, NULL, NULL);
-    
+
     ASSERT_TRUE(list.head == NULL);
     ASSERT_TRUE(list.tail == NULL);
     ASSERT_TRUE(list.count == 0);
@@ -21,7 +21,7 @@ void test_linked_list_delete_head_empty(void) {
     linked_list_init_list(&list, NULL, NULL);
 
     bool res = linked_list_delete_head(&list);
-    
+
     ASSERT_TRUE(!res);
     ASSERT_TRUE(list.count == 0);
     ASSERT_TRUE(list.head == NULL);
@@ -35,7 +35,7 @@ void test_linked_list_delete_head_single_node(void) {
     linked_list_append(&list, &(int){1}, sizeof(int));
 
     bool res = linked_list_delete_head(&list);
-    
+
     ASSERT_TRUE(res);
     ASSERT_TRUE(list.count == 0);
     ASSERT_TRUE(list.head == NULL);
@@ -46,7 +46,7 @@ void test_linked_list_delete_head_single_node(void) {
 void test_linked_list_delete_head(void) {
     struct linked_list_list list = {};
     linked_list_init_list(&list, NULL, NULL);
-    
+
     // Populate with 0 -> 1 -> 2
     int og_len = 3;
     for (int i = 0; i < og_len; i++) {
@@ -168,7 +168,7 @@ void test_linked_list_free_list(void) {
     linked_list_prepend(&list, &a[0], sizeof(int));
     linked_list_prepend(&list, &a[1], sizeof(int));
     linked_list_prepend(&list, &a[2], sizeof(int));
-    
+
     linked_list_free_list(&list);
 
     ASSERT_TRUE(list.count == 0);
@@ -197,7 +197,7 @@ void test_linked_list_insert_empty(void) {
 
     int x = 7;
     linked_list_insert(&list, &x, 0, sizeof(int));
-    
+
     ASSERT_TRUE(list.count == 1);
     ASSERT_TRUE(int_cmp_node(list.head, x));
     ASSERT_TRUE(int_cmp_node(list.tail, x));
@@ -214,7 +214,7 @@ void test_linked_list_insert_at_head(void) {
 
     int x = 7;
     linked_list_insert(&list, &x, 0, sizeof(int));
-    
+
     ASSERT_TRUE(list.count == 3);
     ASSERT_TRUE(int_cmp_node(list.head, x));
 
@@ -230,7 +230,7 @@ void test_linked_list_insert_at_tail(void) {
 
     int x = 7;
     linked_list_insert(&list, &x, 2, sizeof(int));
-    
+
     ASSERT_TRUE(list.count == 3);
     ASSERT_TRUE(int_cmp_node(list.tail, x));
 

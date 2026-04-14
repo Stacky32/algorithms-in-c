@@ -27,12 +27,7 @@ void test_merge_short_right_subarray(void) {
 }
 
 void test_merge_strict_subarray(void) {
-    int a[16] = {
-        0,1,2,3,
-        8,9,10,11,
-        4,5,6,7,
-        12,13,14,15
-    };
+    int a[16] = {0, 1, 2, 3, 8, 9, 10, 11, 4, 5, 6, 7, 12, 13, 14, 15};
     merge(a, 4, 7, 11);
     ASSERT_TRUE(is_sorted_asc(a, 16));
 }
@@ -45,8 +40,7 @@ void test_merge_sort_single_element(void) {
 
 void test_merge_sort_sorted(void) {
     int a[16] = {
-        0, 3, 4, 17, 19, 25, 32, 33,
-        57, 59, 61, 66, 99, 101, 167, 209,
+        0, 3, 4, 17, 19, 25, 32, 33, 57, 59, 61, 66, 99, 101, 167, 209,
     };
     merge_sort(a, 16);
     ASSERT_TRUE(is_sorted_asc(a, 16));
@@ -60,10 +54,8 @@ void test_merge_sort_reverse_order(void) {
 
 void test_merge_sort_larger_array(void) {
     int a[32] = {
-        -5, 7, 0, 2, -17, 7, 3, 0,
-        16, 105, 99, -64, 7, -13, 14, 9,
-        1, 1, 306, -25, 4, 73, 77, 219,
-        51, 44, -5, 5, 67, 32, 0, 11,
+        -5, 7, 0,   2,   -17, 7,  3,  0,   16, 105, 99, -64, 7,  -13, 14, 9,
+        1,  1, 306, -25, 4,   73, 77, 219, 51, 44,  -5, 5,   67, 32,  0,  11,
     };
     merge_sort(a, 32);
     ASSERT_TRUE(is_sorted_asc(a, 32));

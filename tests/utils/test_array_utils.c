@@ -1,6 +1,7 @@
-#include <stdio.h>
 #include "../test_framework.h"
 #include "utils/array_utils.h"
+
+#include <stdio.h>
 
 bool array_equals(int a[], int b[], int len) {
     for (int i = 0; i < len; i++) {

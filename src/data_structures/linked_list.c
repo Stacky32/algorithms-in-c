@@ -91,6 +91,7 @@ bool linked_list_delete_tail(struct linked_list_list *list) {
 }
 
 bool linked_list_delete_value(struct linked_list_list *list, void *value) {
+    assert(list != NULL);
 
     // Iterate list until current value matches or end is reached.
     // Keep track of previous node to update it's next value after removal
@@ -203,4 +204,14 @@ void linked_list_insert(struct linked_list_list *list, void *value, int index, s
     node->next = tmp->next;
     tmp->next = node;
     list->count++;
+}
+
+struct linked_list_node *linked_list_find(struct linked_list_list *list, void *value) {
+    struct linked_list_node *current = list->head;
+
+    while (current != NULL && !list->cmp(current->value, value)) {
+        current = current->next;
+    }
+
+    return current;
 }

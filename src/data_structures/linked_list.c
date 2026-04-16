@@ -90,6 +90,41 @@ bool linked_list_delete_tail(struct linked_list_list *list) {
     return true;
 }
 
+bool linked_list_delete_value(struct linked_list_list *list, void *value) {
+
+    // Iterate list until current value matches or end is reached.
+    // Keep track of previous node to update it's next value after removal
+    struct linked_list_node *prev = NULL;
+    struct linked_list_node *current = list->head;
+
+    while (current != NULL && !list->cmp(current->value, value)) {
+        prev = current;
+        current = current->next;
+    }
+
+    // Item not in list or list is empty
+    if (current == NULL) {
+        return false;
+    }
+
+    // Item is at head
+    if (prev == NULL) {
+        return linked_list_delete_head(list);
+    }
+
+    // Item is at tail
+    if (current->next == NULL) {
+        return linked_list_delete_tail(list);
+    }
+
+    // Item is in interior of list
+    prev->next = current->next;
+    linked_list_free_node(current);
+    list->count--;
+
+    return true;
+}
+
 static void linked_list_clear_list(struct linked_list_list *list) {
     assert(list != NULL);
 

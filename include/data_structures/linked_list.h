@@ -25,6 +25,8 @@ bool linked_list_delete_head(struct linked_list_list *list);
 
 bool linked_list_delete_tail(struct linked_list_list *list);
 
+bool linked_list_delete_value(struct linked_list_list *list, void *value);
+
 void linked_list_free_list(struct linked_list_list *list);
 
 void linked_list_prepend(struct linked_list_list *list, void *value, size_t elem_size);

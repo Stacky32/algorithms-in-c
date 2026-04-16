@@ -19,7 +19,7 @@ jobs:
       run: sudo apt install -y clang-format
 
     - name: Check formatting
-      run: make format-check
+      run: make format_check
 
     - name: Compile library and tests
       run: make

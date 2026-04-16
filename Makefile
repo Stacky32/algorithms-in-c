@@ -20,7 +20,7 @@ test: run_tests
 libalgos.a: $(OBJ)
 	ar rcs $@ $^
 
-run_tests: $(OBJ) $(TOBJ)
+run_tests: $(TOBJ) libalgos.a
 	$(CC) $(CFLAGS) -o $@ $(TOBJ) -L. -lalgos
 
 build/%.o: src/%.c
@@ -42,6 +42,6 @@ format:
 	@echo "Formatting source files..."
 	@clang-format -i $(FORMAT_SRC)
 
-format-check:
+format_check:
 	@echo "Checking formatting..."
 	@clang-format --dry-run --Werror $(FORMAT_SRC)

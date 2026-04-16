@@ -5,6 +5,10 @@ static bool int_cmp_node(struct linked_list_node *node, int value) {
     return *(const int *)node->value == value;
 }
 
+static bool int_cmp(const void *a, const void *b) {
+    return *(const int *)a == *(const int *)b;
+}
+
 void test_linked_list_init_list(void) {
     struct linked_list_list list = {};
     linked_list_init_list(&list, NULL, NULL);
@@ -125,6 +129,87 @@ void test_linked_list_delete_tail_three_nodes(void) {
     ASSERT_TRUE(list.count == og_len - 1);
     ASSERT_TRUE(int_cmp_node(list.tail, 1));
     ASSERT_TRUE(list.tail->next == NULL);
+
+    linked_list_free_list(&list);
+}
+
+void test_linked_list_delete_value_empty(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, int_cmp, NULL);
+
+    bool res = linked_list_delete_value(&list, &(int){1});
+
+    ASSERT_TRUE(!res);
+
+    linked_list_free_list(&list);
+}
+
+void test_linked_list_delete_value_item_not_found(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, int_cmp, NULL);
+
+    int og_len = 3;
+    for (int i = 0; i < og_len; i++) {
+        linked_list_append(&list, &(int){i}, sizeof(int));
+    }
+
+    bool res = linked_list_delete_value(&list, &(int){17});
+
+    ASSERT_TRUE(!res);
+    ASSERT_TRUE(list.count == og_len);
+
+    linked_list_free_list(&list);
+}
+
+void test_linked_list_delete_value_at_head(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, int_cmp, NULL);
+
+    int og_len = 3;
+    for (int i = 0; i < og_len; i++) {
+        linked_list_append(&list, &(int){i}, sizeof(int));
+    }
+
+    bool res = linked_list_delete_value(&list, &(int){0});
+
+    ASSERT_TRUE(res);
+    ASSERT_TRUE(list.count == og_len - 1);
+    ASSERT_TRUE(int_cmp_node(list.head, 1));
+
+    linked_list_free_list(&list);
+}
+
+void test_linked_list_delete_value_at_tail(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, int_cmp, NULL);
+
+    int og_len = 3;
+    for (int i = 0; i < og_len; i++) {
+        linked_list_append(&list, &(int){i}, sizeof(int));
+    }
+
+    bool res = linked_list_delete_value(&list, &(int){2});
+
+    ASSERT_TRUE(res);
+    ASSERT_TRUE(list.count == og_len - 1);
+    ASSERT_TRUE(int_cmp_node(list.tail, 1));
+
+    linked_list_free_list(&list);
+}
+
+void test_linked_list_delete_value_interior(void) {
+    struct linked_list_list list = {};
+    linked_list_init_list(&list, int_cmp, NULL);
+
+    int og_len = 3;
+    for (int i = 0; i < og_len; i++) {
+        linked_list_append(&list, &(int){i}, sizeof(int));
+    }
+
+    bool res = linked_list_delete_value(&list, &(int){1});
+
+    ASSERT_TRUE(res);
+    ASSERT_TRUE(list.count == og_len - 1);
 
     linked_list_free_list(&list);
 }
@@ -266,6 +351,12 @@ void run_linked_list_tests(void) {
     RUN_TEST(test_linked_list_delete_tail_single_node);
     RUN_TEST(test_linked_list_delete_tail_two_nodes);
     RUN_TEST(test_linked_list_delete_tail_three_nodes);
+
+    RUN_TEST(test_linked_list_delete_value_empty);
+    RUN_TEST(test_linked_list_delete_value_item_not_found);
+    RUN_TEST(test_linked_list_delete_value_at_head);
+    RUN_TEST(test_linked_list_delete_value_at_tail);
+    RUN_TEST(test_linked_list_delete_value_interior);
 
     RUN_TEST(test_linked_list_prepend);
 

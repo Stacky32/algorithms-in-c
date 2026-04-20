@@ -184,7 +184,6 @@ void linked_list_append(struct linked_list_list *list, void *value, size_t elem_
 }
 
 void linked_list_insert(struct linked_list_list *list, void *value, int index, size_t elem_size) {
-
     assert(list != NULL);
     if (list->head == NULL || index == 0) {
         return linked_list_prepend(list, value, elem_size);
@@ -214,4 +213,25 @@ struct linked_list_node *linked_list_find(struct linked_list_list *list, void *v
     }
 
     return current;
+}
+
+void linked_list_reverse(struct linked_list_list *list) {
+    assert(list != NULL);
+
+    struct linked_list_node *prev = NULL, *current = list->head, *next = NULL;
+
+    list->tail = current;
+
+    while (current != NULL) {
+        next = current->next;
+
+        // Reverse the link prev->current
+        current->next = prev;
+
+        // Move prev and current pointers forward one
+        prev = current;
+        current = next;
+    }
+
+    list->head = prev;
 }

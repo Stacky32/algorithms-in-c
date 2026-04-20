@@ -365,6 +365,68 @@ void test_linked_list_find_interior(void) {
     linked_list_free_list(&list);
 }
 
+void test_linked_list_reverse_empty(void) {
+    struct linked_list_list list = {};
+    init_range_list(&list, 0);
+
+    linked_list_reverse(&list);
+
+    ASSERT_TRUE(list.count == 0);
+    ASSERT_TRUE(list.head == NULL);
+    ASSERT_TRUE(list.tail == NULL);
+
+    linked_list_free_list(&list);
+}
+
+void test_linked_list_reverse_single_item(void) {
+    struct linked_list_list list = {};
+    int og_len = 1;
+    init_range_list(&list, og_len);
+
+    linked_list_reverse(&list);
+
+    ASSERT_TRUE(list.count == og_len);
+    ASSERT_TRUE(int_cmp_node(list.head, 0));
+    ASSERT_TRUE(int_cmp_node(list.tail, 0));
+
+    linked_list_free_list(&list);
+}
+
+void test_linked_list_reverse_two_items(void) {
+    struct linked_list_list list = {};
+    int og_len = 2;
+    init_range_list(&list, og_len);
+
+    linked_list_reverse(&list);
+
+    ASSERT_TRUE(list.count == og_len);
+    ASSERT_TRUE(int_cmp_node(list.head, 1));
+    ASSERT_TRUE(int_cmp_node(list.tail, 0));
+    ASSERT_TRUE(list.head->next == list.tail);
+
+    linked_list_free_list(&list);
+}
+
+void test_linked_list_reverse_many_items(void) {
+    struct linked_list_list list = {};
+    int og_len = 7;
+    init_range_list(&list, og_len);
+
+    linked_list_reverse(&list);
+
+    ASSERT_TRUE(list.count == og_len);
+
+    struct linked_list_node *c = list.head;
+    for (int i = og_len - 1; i >= 0; i--) {
+        ASSERT_TRUE(int_cmp_node(c, i));
+        c = c->next;
+    }
+
+    ASSERT_TRUE(list.tail->next == NULL);
+
+    linked_list_free_list(&list);
+}
+
 void run_linked_list_tests(void) {
     RUN_TEST(test_linked_list_init_list);
 
@@ -401,4 +463,9 @@ void run_linked_list_tests(void) {
     RUN_TEST(test_linked_list_find_at_head);
     RUN_TEST(test_linked_list_find_at_tail);
     RUN_TEST(test_linked_list_find_interior);
+
+    RUN_TEST(test_linked_list_reverse_empty);
+    RUN_TEST(test_linked_list_reverse_single_item);
+    RUN_TEST(test_linked_list_reverse_two_items);
+    RUN_TEST(test_linked_list_reverse_many_items);
 }

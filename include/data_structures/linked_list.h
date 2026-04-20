@@ -37,4 +37,6 @@ void linked_list_append(struct linked_list_list *list, void *value, size_t elem_
 
 void linked_list_insert(struct linked_list_list *list, void *value, int index, size_t elem_size);
 
+void linked_list_reverse(struct linked_list_list *list);
+
 #endif
